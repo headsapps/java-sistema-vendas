@@ -12,8 +12,8 @@ public class Conexao {
     private final String SERVIDOR = "localhost";
     private final String PORTA = "3306";
     private final String BANCO_DE_DADOS = "dbsistemavenda";
-    private final String USUARIO = "root";
-    private final String SENHA = "root";
+    private final String USUARIO = "abdiassantos";
+    private final String SENHA = "Andressa!22";
     private final String URL = "jdbc:mysql://" + SERVIDOR + ":" + PORTA + "/" + BANCO_DE_DADOS;
 
     private Connection conexao;

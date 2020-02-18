@@ -9,7 +9,14 @@ import com.jdenner.to.ItemVenda;
 import com.jdenner.to.Produto;
 import com.jdenner.to.Venda;
 import com.jdenner.to.enums.Situacao;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -386,11 +393,30 @@ public class LancamentoVenda extends javax.swing.JInternalFrame {
 
     private void btAdicionarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAdicionarItemActionPerformed
         if (validarFormularioItens()) {
+            
             ItemVenda iv = new ItemVenda();
             iv.setProduto((Produto) ftfProduto.getValue());
             iv.setVenda(venda);
             iv.setQuantidade((int) spQuantidade.getValue());
             iv.setValorUnitario((Double) ftfValorUnitario.getValue());
+            
+            //Criação de arquivo txt
+            FileWriter arq = null;
+            try {
+                arq = new FileWriter("e:\\impressora.txt");
+                PrintWriter gravarArq = new PrintWriter(arq);
+                Desktop desktop = Desktop.getDesktop();
+                
+                gravarArq.printf(ftfProduto.getValue().toString() + " - R$ " + ftfValorUnitario.getValue().toString() + "   x  " 
+                        + spQuantidade.getValue().toString());
+                arq.close();
+                
+                String caminhoDoArquivo = "e:\\impressora.txt";
+                File arquivoImprimir = new File(caminhoDoArquivo);
+                desktop.print(arquivoImprimir);
+            } catch (IOException ex) {
+                Logger.getLogger(LancamentoVenda.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             venda.addItem(iv);
 
@@ -400,6 +426,7 @@ public class LancamentoVenda extends javax.swing.JInternalFrame {
             ftfValorTotal.setValue(venda.getValorTotal());
 
             limpaFormularioItens();
+            
         }
     }//GEN-LAST:event_btAdicionarItemActionPerformed
 
@@ -460,6 +487,7 @@ public class LancamentoVenda extends javax.swing.JInternalFrame {
                 }
             }
             salvar(true);
+            
         }
     }//GEN-LAST:event_btFinalizarActionPerformed
 
